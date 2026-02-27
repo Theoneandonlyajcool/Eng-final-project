@@ -67,7 +67,7 @@ export function Navbar() {
                   letterSpacing: "0.05em",
                 }}
               >
-                Task manager
+                Task Forge
               </span>
             </div>
           </Link>

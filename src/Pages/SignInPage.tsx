@@ -160,7 +160,7 @@ export default function SignInPage() {
                   letterSpacing: "0.05em",
                 }}
               >
-                Task manager
+                Task Forge
               </span>
             </div>
 
@@ -337,23 +337,6 @@ export default function SignInPage() {
                 </button>
               </div>
             </div>
-
-            {/* Remember me */}
-            {/* <div className="flex items-center gap-3">
-              <button
-                className="w-5 h-5 rounded flex-shrink-0 flex items-center justify-center transition-all duration-200"
-                style={{
-                  background: "rgba(249,115,22,0.15)",
-                  border: "1px solid rgba(249,115,22,0.3)",
-                }}
-              >
-                <div
-                  className="w-2.5 h-2.5 rounded-sm"
-                  style={{ background: "#f97316" }}
-                />
-              </button>
-              <span className="text-sm text-stone-500">Keep me signed in</span>
-            </div> */}
 
             {/* Submit Button */}
             <button
