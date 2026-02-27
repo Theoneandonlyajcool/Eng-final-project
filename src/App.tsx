@@ -2,7 +2,6 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider, useAuth } from "@/contexts/AuthProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { Login } from "@/Pages/Login";
 import { Dashboard } from "@/Pages/Dashboard";
 import { Projects } from "@/Pages/Projects";
 import { ProjectBoard } from "@/Pages/ProjectBoard";
