@@ -51,26 +51,28 @@ export function ProjectBoard() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 min-w-0">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate("/projects")}
-            className="cursor-pointer"
+            className="cursor-pointer w-fit"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Projects
           </Button>
-          <h1 className="text-3xl font-bold">Project Board</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold truncate">
+            Project Board
+          </h1>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <Button variant="outline" size="sm" className="shrink-0">
             <Search className="h-4 w-4 mr-2" />
             Search
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="shrink-0">
             <Filter className="h-4 w-4 mr-2" />
             Filter
           </Button>

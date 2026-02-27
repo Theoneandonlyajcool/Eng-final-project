@@ -30,7 +30,7 @@ export function Board({ tasks, onAddTask, onDragEnd }: BoardProps) {
 
   return (
     <DndContext onDragEnd={onDragEnd}>
-      <div className="flex gap-6 overflow-x-auto pb-6 justify-center items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
         {columns.map((column) => (
           <Column
             key={column.status}
