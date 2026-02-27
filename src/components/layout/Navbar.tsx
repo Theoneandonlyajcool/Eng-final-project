@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthProvider";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, LogOut, User } from "lucide-react";
+import { Moon, Sun, LogOut } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export function Navbar() {

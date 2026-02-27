@@ -21,6 +21,7 @@ const mockTask = {
 
 export function TaskDetail() {
   const { id, taskId } = useParams();
+  console.log(id, taskId);
 
   // In real app, fetch task by taskId
   const task = mockTask;

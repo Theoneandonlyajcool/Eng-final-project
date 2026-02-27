@@ -17,6 +17,7 @@ export function ProjectBoard() {
 
   // Filter tasks for this project
   const projectTasks = tasks.filter((task) => task.projectId === id);
+  console.log(newTaskStatus);
 
   const handleAddTask = (status: Task["status"]) => {
     setNewTaskStatus(status);
