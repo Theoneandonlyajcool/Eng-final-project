@@ -7,6 +7,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useEffect } from "react";
 
 interface ColumnProps {
   title: string;
@@ -26,15 +27,27 @@ export function Column({ title, status, tasks, onAddTask }: ColumnProps) {
     id: status,
   });
 
+  const mode = localStorage.getItem("theme");
+  console.log("This is the current mode:", mode);
+
+  useEffect(() => {
+    console.log("This is the current mode:", localStorage.getItem("theme"));
+  }, [mode]);
+
   return (
-    <div className="flex flex-col w-80 bg-gray-50 rounded-lg p-4">
+    <div className={`flex flex-col w-80 rounded-lg p-4 bg-gray-500`}>
       <div className="flex items-center justify-between mb-4">
         <h3
           className={`text-sm font-semibold px-2 py-1 rounded ${statusColors[status]}`}
         >
           {title} ({tasks.length})
         </h3>
-        <Button variant="ghost" size="sm" onClick={onAddTask}>
+        <Button
+          className="text-white"
+          variant="ghost"
+          size="sm"
+          onClick={onAddTask}
+        >
           <Plus className="h-4 w-4" />
         </Button>
       </div>

@@ -7,6 +7,7 @@ import { useData } from "@/contexts/DataProvider";
 import type { Task } from "@/types";
 import type { DragEndEvent } from "@dnd-kit/core";
 import { ArrowLeft, Search, Filter } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function ProjectBoard() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export function ProjectBoard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | undefined>();
   const [newTaskStatus, setNewTaskStatus] = useState<Task["status"]>("todo");
+  const navigate = useNavigate();
 
   // Filter tasks for this project
   const projectTasks = tasks.filter((task) => task.projectId === id);
@@ -52,7 +54,12 @@ export function ProjectBoard() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/projects")}
+            className="cursor-pointer"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Projects
           </Button>

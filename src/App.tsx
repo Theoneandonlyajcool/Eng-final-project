@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider, useAuth } from "@/contexts/AuthProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -12,19 +12,20 @@ import { Spinner } from "@/components/ui/spinner";
 // import { Button } from "@/components/ui/button";
 import { DataProvider } from "@/contexts/DataProvider";
 import { Toaster } from "@/components/ui/sonner";
+import SignInPage from "./Pages/SignInPage";
 
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <AuthProvider>
         <DataProvider>
-          <BrowserRouter>
+          <HashRouter>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<SignInPage />} />
               <Route path="/*" element={<AuthGate />} />
             </Routes>
             <Toaster position="top-center" richColors />
-          </BrowserRouter>
+          </HashRouter>
         </DataProvider>
       </AuthProvider>
     </ThemeProvider>

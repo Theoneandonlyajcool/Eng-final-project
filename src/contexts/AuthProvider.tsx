@@ -14,6 +14,26 @@ const mockUser: User = {
   avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
 };
 
+const getUserFromSession = (): User => {
+  try {
+    const storedCredentials = sessionStorage.getItem("User_Credentials");
+    if (!storedCredentials) return mockUser;
+
+    const parsed = JSON.parse(storedCredentials) as {
+      name?: string;
+      email?: string;
+    };
+
+    return {
+      ...mockUser,
+      name: parsed.name?.trim() || mockUser.name,
+      email: parsed.email?.trim() || mockUser.email,
+    };
+  } catch {
+    return mockUser;
+  }
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
@@ -30,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (parsed.isAuthenticated) {
           setAuthState({
             isAuthenticated: true,
-            user: mockUser,
+            user: getUserFromSession(),
             isLoading: false,
           });
         } else {
@@ -47,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = () => {
     setAuthState({
       isAuthenticated: true,
-      user: mockUser,
+      user: getUserFromSession(),
       isLoading: false,
     });
     localStorage.setItem("auth", JSON.stringify({ isAuthenticated: true }));

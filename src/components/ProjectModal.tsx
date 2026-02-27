@@ -12,7 +12,9 @@ interface ProjectModalProps {
   onClose: () => void;
   project?: Project;
   onSubmit: (
-    project: Omit<Project, "id" | "createdAt" | "updatedAt" | "ownerId">,
+    project: Omit<Project, "id" | "updatedAt" | "ownerId" | "createdAt"> & {
+      createdAt?: Date;
+    },
   ) => void;
 }
 
@@ -24,7 +26,7 @@ export function ProjectModal({
 }: ProjectModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>
             {project ? "Edit Project" : "Create New Project"}

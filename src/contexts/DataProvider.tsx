@@ -5,7 +5,9 @@ interface DataContextType {
   projects: Project[];
   tasks: Task[];
   addProject: (
-    project: Omit<Project, "id" | "createdAt" | "updatedAt">,
+    project: Omit<Project, "id" | "updatedAt" | "createdAt"> & {
+      createdAt?: Date;
+    },
   ) => void;
   updateProject: (id: string, updates: Partial<Project>) => void;
   deleteProject: (id: string) => void;
@@ -18,80 +20,81 @@ const DataContext = createContext<DataContextType | null>(null);
 
 // Initial mock data
 const initialProjects: Project[] = [
-  {
-    id: "1",
-    name: "Website Redesign",
-    description: "Redesign the company website with modern UI",
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-02-01"),
-    ownerId: "1",
-  },
-  {
-    id: "2",
-    name: "Mobile App Development",
-    description: "Develop a mobile app for customer engagement",
-    createdAt: new Date("2024-01-20"),
-    updatedAt: new Date("2024-02-05"),
-    ownerId: "1",
-  },
-  {
-    id: "3",
-    name: "Marketing Campaign",
-    description: "Q1 marketing campaign planning and execution",
-    createdAt: new Date("2024-02-01"),
-    updatedAt: new Date("2024-02-10"),
-    ownerId: "1",
-  },
+  // {
+  //   id: "1",
+  //   name: "Website Redesign",
+  //   description: "Redesign the company website with modern UI",
+  //   createdAt: new Date("2024-01-15"),
+  //   updatedAt: new Date("2024-02-01"),
+  //   ownerId: "1",
+  // },
+  // {
+  //   id: "2",
+  //   name: "Mobile App Development",
+  //   description: "Develop a mobile app for customer engagement",
+  //   createdAt: new Date("2024-01-20"),
+  //   updatedAt: new Date("2024-02-05"),
+  //   ownerId: "1",
+  // },
+  // {
+  //   id: "3",
+  //   name: "Marketing Campaign",
+  //   description: "Q1 marketing campaign planning and execution",
+  //   createdAt: new Date("2024-02-01"),
+  //   updatedAt: new Date("2024-02-10"),
+  //   ownerId: "1",
+  // },
 ];
 
 const initialTasks: Task[] = [
-  {
-    id: "1",
-    title: "Design homepage mockup",
-    description: "Create wireframes and mockups for the new homepage",
-    status: "todo",
-    priority: "high",
-    projectId: "1",
-    createdAt: new Date("2024-02-01"),
-    updatedAt: new Date("2024-02-01"),
-    dueDate: new Date("2024-02-15"),
-  },
-  {
-    id: "2",
-    title: "Implement user authentication",
-    description: "Set up login and registration system",
-    status: "in-progress",
-    priority: "high",
-    projectId: "1",
-    createdAt: new Date("2024-02-02"),
-    updatedAt: new Date("2024-02-05"),
-    assigneeId: "1",
-  },
-  {
-    id: "3",
-    title: "Write API documentation",
-    description: "Document all API endpoints",
-    status: "done",
-    priority: "medium",
-    projectId: "1",
-    createdAt: new Date("2024-01-30"),
-    updatedAt: new Date("2024-02-10"),
-  },
-  {
-    id: "4",
-    title: "Set up CI/CD pipeline",
-    description: "Configure automated testing and deployment",
-    status: "todo",
-    priority: "medium",
-    projectId: "1",
-    createdAt: new Date("2024-02-03"),
-    updatedAt: new Date("2024-02-03"),
-  },
+  // {
+  //   id: "1",
+  //   title: "Design homepage mockup",
+  //   description: "Create wireframes and mockups for the new homepage",
+  //   status: "todo",
+  //   priority: "high",
+  //   projectId: "1",
+  //   createdAt: new Date("2024-02-01"),
+  //   updatedAt: new Date("2024-02-01"),
+  //   dueDate: new Date("2024-02-15"),
+  // },
+  // {
+  //   id: "2",
+  //   title: "Implement user authentication",
+  //   description: "Set up login and registration system",
+  //   status: "in-progress",
+  //   priority: "high",
+  //   projectId: "1",
+  //   createdAt: new Date("2024-02-02"),
+  //   updatedAt: new Date("2024-02-05"),
+  //   assigneeId: "1",
+  // },
+  // {
+  //   id: "3",
+  //   title: "Write API documentation",
+  //   description: "Document all API endpoints",
+  //   status: "done",
+  //   priority: "medium",
+  //   projectId: "1",
+  //   createdAt: new Date("2024-01-30"),
+  //   updatedAt: new Date("2024-02-10"),
+  // },
+  // {
+  //   id: "4",
+  //   title: "Set up CI/CD pipeline",
+  //   description: "Configure automated testing and deployment",
+  //   status: "todo",
+  //   priority: "medium",
+  //   projectId: "1",
+  //   createdAt: new Date("2024-02-03"),
+  //   updatedAt: new Date("2024-02-03"),
+  // },
 ];
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -123,28 +126,32 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       setTasks(initialTasks);
       localStorage.setItem("tasks", JSON.stringify(initialTasks));
     }
+
+    setIsHydrated(true);
   }, []);
 
   // Save to localStorage whenever data changes
   useEffect(() => {
-    if (projects.length > 0) {
-      localStorage.setItem("projects", JSON.stringify(projects));
-    }
-  }, [projects]);
+    if (!isHydrated) return;
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }, [projects, isHydrated]);
 
   useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  }, [tasks]);
+    if (!isHydrated) return;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks, isHydrated]);
 
   const addProject = (
-    projectData: Omit<Project, "id" | "createdAt" | "updatedAt">,
+    projectData: Omit<Project, "id" | "updatedAt" | "createdAt"> & {
+      createdAt?: Date;
+    },
   ) => {
     const newProject: Project = {
       ...projectData,
       id: Date.now().toString(),
-      createdAt: new Date(),
+      createdAt: projectData.createdAt
+        ? new Date(projectData.createdAt)
+        : new Date(),
       updatedAt: new Date(),
     };
     setProjects((prev) => [...prev, newProject]);
