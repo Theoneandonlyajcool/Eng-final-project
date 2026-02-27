@@ -85,7 +85,12 @@ export function Profile() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
+            <Button
+              className="w-full bg-linear-to-br from-orange-500 to-orange-700 text-white cursor-pointer hover:from-orange-600 hover:to-orange-800 transition-all duration-500 hover:scale-105"
+              onClick={handleSaveChanges}
+            >
+              Save Changes
+            </Button>
           </CardContent>
         </Card>
 
@@ -94,7 +99,11 @@ export function Profile() {
             <CardTitle>Account Actions</CardTitle>
           </CardHeader>
           <CardContent>
-            <Button variant="destructive" onClick={logout}>
+            <Button
+              className="w-full bg-red-500 hover:bg-red-600 text-white hover:scale-105 transition-all duration-500 cursor-pointer"
+              variant="destructive"
+              onClick={logout}
+            >
               Sign Out
             </Button>
           </CardContent>
